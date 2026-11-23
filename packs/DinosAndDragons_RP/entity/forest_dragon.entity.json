@@ -1,0 +1,45 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:forest_dragon",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/forest_dragon"
+      },
+      "geometry": {
+        "default": "geometry.dd.forest_dragon"
+      },
+      "animations": {
+        "walk": "animation.dd.forest_dragon.walk",
+        "idle": "animation.dd.forest_dragon.idle",
+        "look": "animation.dd.forest_dragon.look",
+        "sit": "animation.dd.forest_dragon.sit",
+        "fly": "animation.dd.forest_dragon.fly",
+        "fold": "animation.dd.forest_dragon.fold",
+        "wings": "controller.animation.dd.dragon.wings"
+      },
+      "scripts": {
+        "scale": "1.25",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          },
+          "wings"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#3e7d32",
+        "overlay_color": "#b8d36b"
+      }
+    }
+  }
+}

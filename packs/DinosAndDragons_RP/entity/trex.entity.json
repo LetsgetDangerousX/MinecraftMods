@@ -1,0 +1,41 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:trex",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/trex"
+      },
+      "geometry": {
+        "default": "geometry.dd.trex"
+      },
+      "animations": {
+        "walk": "animation.dd.trex.walk",
+        "idle": "animation.dd.trex.idle",
+        "look": "animation.dd.trex.look",
+        "sit": "animation.dd.trex.sit"
+      },
+      "scripts": {
+        "scale": "1.25",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#6e5b3a",
+        "overlay_color": "#cdb78c"
+      }
+    }
+  }
+}

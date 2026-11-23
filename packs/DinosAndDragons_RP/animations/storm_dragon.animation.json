@@ -1,0 +1,314 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.dd.storm_dragon.walk": {
+      "loop": true,
+      "bones": {
+        "leg_fl": {
+          "rotation": [
+            "math.cos(query.modified_distance_moved * 8.42 + 0) * 30.0 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0,
+            0
+          ]
+        },
+        "leg_fr": {
+          "rotation": [
+            "math.cos(query.modified_distance_moved * 8.42 + 180) * 30.0 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0,
+            0
+          ]
+        },
+        "leg_bl": {
+          "rotation": [
+            "math.cos(query.modified_distance_moved * 8.42 + 180) * 30.0 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0,
+            0
+          ]
+        },
+        "leg_br": {
+          "rotation": [
+            "math.cos(query.modified_distance_moved * 8.42 + 0) * 30.0 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0,
+            0
+          ]
+        },
+        "tail1": {
+          "rotation": [
+            0,
+            "math.sin(query.modified_distance_moved * 8.42 - 0) * 3 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0
+          ]
+        },
+        "tail2": {
+          "rotation": [
+            0,
+            "math.sin(query.modified_distance_moved * 8.42 - 30) * 5 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0
+          ]
+        },
+        "tail3": {
+          "rotation": [
+            0,
+            "math.sin(query.modified_distance_moved * 8.42 - 60) * 7 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0
+          ]
+        },
+        "tail4": {
+          "rotation": [
+            0,
+            "math.sin(query.modified_distance_moved * 8.42 - 90) * 9 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0
+          ]
+        },
+        "body": {
+          "position": [
+            0,
+            "math.abs(math.cos(query.modified_distance_moved * 8.42)) * 0.6 * math.clamp(query.modified_move_speed * 2.2, 0, 1) * (query.is_on_ground ? 1 : 0)",
+            0
+          ]
+        }
+      }
+    },
+    "animation.dd.storm_dragon.idle": {
+      "loop": true,
+      "bones": {
+        "tail1": {
+          "rotation": [
+            "math.sin(query.life_time * 45 - 0) * 1.5",
+            "math.sin(query.life_time * 60 - 0) * 3.0",
+            0
+          ]
+        },
+        "tail2": {
+          "rotation": [
+            "math.sin(query.life_time * 45 - 35) * 1.5",
+            "math.sin(query.life_time * 60 - 40) * 5.5",
+            0
+          ]
+        },
+        "tail3": {
+          "rotation": [
+            "math.sin(query.life_time * 45 - 70) * 1.5",
+            "math.sin(query.life_time * 60 - 80) * 8.0",
+            0
+          ]
+        },
+        "tail4": {
+          "rotation": [
+            "math.sin(query.life_time * 45 - 105) * 1.5",
+            "math.sin(query.life_time * 60 - 120) * 10.5",
+            0
+          ]
+        },
+        "neck1": {
+          "rotation": [
+            "math.sin(query.life_time * 40 + 0) * 2",
+            0,
+            0
+          ]
+        },
+        "neck2": {
+          "rotation": [
+            "math.sin(query.life_time * 40 + 25) * 2",
+            0,
+            0
+          ]
+        },
+        "jaw": {
+          "rotation": [
+            "math.pow(math.max(0, math.sin(query.life_time * 22)), 12) * 22",
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "animation.dd.storm_dragon.look": {
+      "loop": true,
+      "bones": {
+        "head": {
+          "rotation": [
+            "query.target_x_rotation * 0.7",
+            "query.target_y_rotation * 0.8",
+            0
+          ]
+        }
+      }
+    },
+    "animation.dd.storm_dragon.sit": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "position": [
+            0,
+            -12,
+            0
+          ]
+        },
+        "leg_fl": {
+          "rotation": [
+            -90,
+            0,
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "leg_fr": {
+          "rotation": [
+            -90,
+            0,
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "leg_bl": {
+          "rotation": [
+            -90,
+            0,
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "leg_br": {
+          "rotation": [
+            -90,
+            0,
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "tail1": {
+          "rotation": [
+            8,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "animation.dd.storm_dragon.fly": {
+      "loop": true,
+      "bones": {
+        "wing_l": {
+          "rotation": [
+            0,
+            0,
+            "math.sin(query.life_time * 300) * 38"
+          ]
+        },
+        "wing_r": {
+          "rotation": [
+            0,
+            0,
+            "-math.sin(query.life_time * 300) * 38"
+          ]
+        },
+        "wing_tip_l": {
+          "rotation": [
+            0,
+            0,
+            "math.sin(query.life_time * 300 - 50) * 28"
+          ]
+        },
+        "wing_tip_r": {
+          "rotation": [
+            0,
+            0,
+            "-math.sin(query.life_time * 300 - 50) * 28"
+          ]
+        },
+        "leg_fl": {
+          "rotation": [
+            35,
+            0,
+            0
+          ]
+        },
+        "leg_fr": {
+          "rotation": [
+            35,
+            0,
+            0
+          ]
+        },
+        "leg_bl": {
+          "rotation": [
+            55,
+            0,
+            0
+          ]
+        },
+        "leg_br": {
+          "rotation": [
+            55,
+            0,
+            0
+          ]
+        },
+        "body": {
+          "position": [
+            0,
+            "math.sin(query.life_time * 300 + 90) * 0.8",
+            0
+          ]
+        },
+        "tail1": {
+          "rotation": [
+            "math.sin(query.life_time * 300 - 60) * 3",
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "animation.dd.storm_dragon.fold": {
+      "loop": true,
+      "bones": {
+        "wing_l": {
+          "rotation": [
+            0,
+            "-70 + math.sin(query.life_time * 50) * 2",
+            -25
+          ]
+        },
+        "wing_r": {
+          "rotation": [
+            0,
+            "70 - math.sin(query.life_time * 50) * 2",
+            25
+          ]
+        },
+        "wing_tip_l": {
+          "rotation": [
+            0,
+            -100,
+            40
+          ]
+        },
+        "wing_tip_r": {
+          "rotation": [
+            0,
+            100,
+            -40
+          ]
+        }
+      }
+    }
+  }
+}

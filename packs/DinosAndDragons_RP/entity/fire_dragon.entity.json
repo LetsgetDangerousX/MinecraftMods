@@ -1,0 +1,45 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:fire_dragon",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/fire_dragon"
+      },
+      "geometry": {
+        "default": "geometry.dd.fire_dragon"
+      },
+      "animations": {
+        "walk": "animation.dd.fire_dragon.walk",
+        "idle": "animation.dd.fire_dragon.idle",
+        "look": "animation.dd.fire_dragon.look",
+        "sit": "animation.dd.fire_dragon.sit",
+        "fly": "animation.dd.fire_dragon.fly",
+        "fold": "animation.dd.fire_dragon.fold",
+        "wings": "controller.animation.dd.dragon.wings"
+      },
+      "scripts": {
+        "scale": "1.5",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          },
+          "wings"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#a8281e",
+        "overlay_color": "#f0a43a"
+      }
+    }
+  }
+}

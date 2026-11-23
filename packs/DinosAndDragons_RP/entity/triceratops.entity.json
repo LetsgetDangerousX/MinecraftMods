@@ -1,0 +1,41 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:triceratops",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/triceratops"
+      },
+      "geometry": {
+        "default": "geometry.dd.triceratops"
+      },
+      "animations": {
+        "walk": "animation.dd.triceratops.walk",
+        "idle": "animation.dd.triceratops.idle",
+        "look": "animation.dd.triceratops.look",
+        "sit": "animation.dd.triceratops.sit"
+      },
+      "scripts": {
+        "scale": "1.3",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#9a6037",
+        "overlay_color": "#c97a2e"
+      }
+    }
+  }
+}

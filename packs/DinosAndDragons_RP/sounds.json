@@ -1,0 +1,150 @@
+{
+  "entity_sounds": {
+    "entities": {
+      "dd:fire_dragon": {
+        "volume": 0.9,
+        "pitch": [
+          1.1,
+          1.35
+        ],
+        "events": {
+          "ambient": "mob.enderdragon.growl",
+          "hurt": "mob.enderdragon.hit",
+          "death": "mob.ravager.death",
+          "step": {
+            "sound": "mob.ravager.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:ice_dragon": {
+        "volume": 0.9,
+        "pitch": [
+          1.1,
+          1.35
+        ],
+        "events": {
+          "ambient": "mob.enderdragon.growl",
+          "hurt": "mob.enderdragon.hit",
+          "death": "mob.ravager.death",
+          "step": {
+            "sound": "mob.ravager.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:forest_dragon": {
+        "volume": 0.9,
+        "pitch": [
+          1.1,
+          1.35
+        ],
+        "events": {
+          "ambient": "mob.enderdragon.growl",
+          "hurt": "mob.enderdragon.hit",
+          "death": "mob.ravager.death",
+          "step": {
+            "sound": "mob.ravager.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:storm_dragon": {
+        "volume": 0.9,
+        "pitch": [
+          1.1,
+          1.35
+        ],
+        "events": {
+          "ambient": "mob.enderdragon.growl",
+          "hurt": "mob.enderdragon.hit",
+          "death": "mob.ravager.death",
+          "step": {
+            "sound": "mob.ravager.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:trex": {
+        "volume": 1.4,
+        "pitch": [
+          0.6,
+          0.75
+        ],
+        "events": {
+          "ambient": "mob.ravager.ambient",
+          "hurt": "mob.ravager.hurt",
+          "death": "mob.ravager.death",
+          "step": {
+            "sound": "mob.ravager.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:triceratops": {
+        "volume": 1.1,
+        "pitch": [
+          0.55,
+          0.7
+        ],
+        "events": {
+          "ambient": "mob.hoglin.ambient",
+          "hurt": "mob.hoglin.hurt",
+          "death": "mob.hoglin.death",
+          "step": {
+            "sound": "mob.hoglin.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:velociraptor": {
+        "volume": 1.0,
+        "pitch": [
+          0.7,
+          0.9
+        ],
+        "events": {
+          "ambient": "mob.fox.screech",
+          "hurt": "mob.fox.hurt",
+          "death": "mob.fox.death",
+          "step": {
+            "sound": "mob.wolf.step",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:brachiosaurus": {
+        "volume": 1.6,
+        "pitch": [
+          0.4,
+          0.55
+        ],
+        "events": {
+          "ambient": "mob.sniffer.idle",
+          "hurt": "mob.sniffer.hurt",
+          "death": "mob.sniffer.death",
+          "step": {
+            "sound": "mob.irongolem.walk",
+            "volume": 0.5
+          }
+        }
+      },
+      "dd:stegosaurus": {
+        "volume": 1.0,
+        "pitch": [
+          0.55,
+          0.7
+        ],
+        "events": {
+          "ambient": "mob.polarbear.idle",
+          "hurt": "mob.polarbear.hurt",
+          "death": "mob.polarbear.death",
+          "step": {
+            "sound": "mob.polarbear.step",
+            "volume": 0.5
+          }
+        }
+      }
+    }
+  }
+}

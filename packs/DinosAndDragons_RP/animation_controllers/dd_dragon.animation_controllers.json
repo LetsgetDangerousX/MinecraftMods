@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.dd.dragon.wings": {
+      "initial_state": "ground",
+      "states": {
+        "ground": {
+          "animations": [
+            "fold"
+          ],
+          "blend_transition": 0.3,
+          "transitions": [
+            {
+              "air": "!query.is_on_ground && !query.is_in_water"
+            }
+          ]
+        },
+        "air": {
+          "animations": [
+            "fly"
+          ],
+          "blend_transition": 0.3,
+          "transitions": [
+            {
+              "ground": "query.is_on_ground || query.is_in_water"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

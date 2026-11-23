@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:item": {
+    "description": {
+      "identifier": "dd:castle_blueprint",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "dd_castle_blueprint"
+        }
+      },
+      "minecraft:display_name": {
+        "value": "Castle Blueprint"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:use_modifiers": {
+        "use_duration": 0.25,
+        "movement_modifier": 1.0
+      },
+      "minecraft:interact_button": "Build Castle",
+      "minecraft:glint": true
+    }
+  }
+}

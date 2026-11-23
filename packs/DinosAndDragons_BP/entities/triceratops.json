@@ -1,0 +1,365 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "dd:triceratops",
+      "spawn_category": "creature",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "properties": {
+        "dd:sitting": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        },
+        "dd:ridden": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        }
+      }
+    },
+    "component_groups": {
+      "dd:wild": {
+        "minecraft:tameable": {
+          "probability": 0.3,
+          "tame_items": [
+            "minecraft:wheat",
+            "minecraft:apple",
+            "minecraft:carrot",
+            "minecraft:sweet_berries",
+            "minecraft:melon_slice",
+            "minecraft:hay_block"
+          ],
+          "tame_event": {
+            "event": "dd:on_tame",
+            "target": "self"
+          }
+        },
+        "minecraft:behavior.random_stroll": {
+          "priority": 7,
+          "speed_multiplier": 0.6
+        }
+      },
+      "dd:tamed": {
+        "minecraft:is_tamed": {},
+        "minecraft:rideable": {
+          "seat_count": 1,
+          "family_types": [
+            "player"
+          ],
+          "crouching_skip_interact": true,
+          "interact_text": "action.interact.ride.horse",
+          "dismount_mode": "default",
+          "on_rider_enter_event": "dd:mounted",
+          "on_rider_exit_event": "dd:dismounted",
+          "seats": [
+            {
+              "position": [
+                0,
+                1.9,
+                0.0
+              ],
+              "min_rider_count": 0,
+              "max_rider_count": 1,
+              "third_person_camera_radius": 6.9,
+              "camera_relax_distance_smoothing": 6.0
+            }
+          ]
+        },
+        "minecraft:behavior.player_ride_tamed": {
+          "priority": 0
+        },
+        "minecraft:behavior.owner_hurt_by_target": {
+          "priority": 1
+        },
+        "minecraft:behavior.owner_hurt_target": {
+          "priority": 2
+        },
+        "minecraft:interact": {
+          "interactions": [
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_sneak_held",
+                      "subject": "other",
+                      "value": true
+                    },
+                    {
+                      "test": "is_owner",
+                      "subject": "other",
+                      "value": true
+                    },
+                    {
+                      "test": "bool_property",
+                      "subject": "self",
+                      "domain": "dd:sitting",
+                      "operator": "!=",
+                      "value": true
+                    }
+                  ]
+                },
+                "event": "dd:sit",
+                "target": "self"
+              },
+              "interact_text": "action.interact.dd.stay",
+              "swing": true
+            },
+            {
+              "on_interact": {
+                "filters": {
+                  "all_of": [
+                    {
+                      "test": "is_sneak_held",
+                      "subject": "other",
+                      "value": true
+                    },
+                    {
+                      "test": "is_owner",
+                      "subject": "other",
+                      "value": true
+                    },
+                    {
+                      "test": "bool_property",
+                      "subject": "self",
+                      "domain": "dd:sitting",
+                      "value": true
+                    }
+                  ]
+                },
+                "event": "dd:stand",
+                "target": "self"
+              },
+              "interact_text": "action.interact.dd.follow",
+              "swing": true
+            }
+          ]
+        },
+        "minecraft:input_ground_controlled": {}
+      },
+      "dd:follow": {
+        "minecraft:behavior.follow_owner": {
+          "priority": 5,
+          "speed_multiplier": 1.25,
+          "start_distance": 14,
+          "stop_distance": 4
+        },
+        "minecraft:behavior.random_stroll": {
+          "priority": 8,
+          "speed_multiplier": 0.6
+        }
+      },
+      "dd:stay": {
+        "minecraft:mark_variant": {
+          "value": 1
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "dinosaur",
+          "triceratops",
+          "dd_creature",
+          "mob"
+        ]
+      },
+      "minecraft:health": {
+        "value": 90,
+        "max": 90
+      },
+      "minecraft:collision_box": {
+        "width": 2.2,
+        "height": 2.1
+      },
+      "minecraft:attack": {
+        "damage": 9
+      },
+      "minecraft:jump.static": {},
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0
+      },
+      "minecraft:nameable": {},
+      "minecraft:leashable": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:knockback_resistance": {
+        "value": 0.6
+      },
+      "minecraft:follow_range": {
+        "value": 24,
+        "max": 32
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/dd/triceratops.json"
+      },
+      "minecraft:experience_reward": {
+        "on_death": "query.last_hit_by_player ? 12 : 0"
+      },
+      "minecraft:healable": {
+        "items": [
+          {
+            "item": "minecraft:wheat",
+            "heal_amount": 6
+          },
+          {
+            "item": "minecraft:apple",
+            "heal_amount": 8
+          },
+          {
+            "item": "minecraft:carrot",
+            "heal_amount": 6
+          },
+          {
+            "item": "minecraft:hay_block",
+            "heal_amount": 30
+          }
+        ]
+      },
+      "minecraft:ambient_sound_interval": {
+        "value": 10.0,
+        "range": 16.0,
+        "event_name": "ambient"
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 1
+      },
+      "minecraft:behavior.melee_attack": {
+        "priority": 3,
+        "speed_multiplier": 1.3,
+        "track_target": true
+      },
+      "minecraft:behavior.tempt": {
+        "priority": 6,
+        "speed_multiplier": 1.1,
+        "items": [
+          "minecraft:wheat",
+          "minecraft:apple",
+          "minecraft:carrot",
+          "minecraft:sweet_berries",
+          "minecraft:melon_slice",
+          "minecraft:hay_block"
+        ]
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 9,
+        "look_distance": 10,
+        "probability": 0.02
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 10
+      },
+      "minecraft:variable_max_auto_step": {
+        "base_value": 1.0625,
+        "controlled_value": 1.5625,
+        "jump_prevented_value": 0.5625
+      },
+      "minecraft:physics": {},
+      "minecraft:movement": {
+        "value": 0.24
+      },
+      "minecraft:movement.basic": {
+        "max_turn": 30
+      },
+      "minecraft:navigation.walk": {
+        "can_path_over_water": true,
+        "avoid_water": true,
+        "avoid_damage_blocks": true
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "fall",
+            "deals_damage": "yes",
+            "damage_modifier": -6
+          }
+        ]
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": [
+            "dd:wild"
+          ]
+        }
+      },
+      "dd:mounted": {
+        "remove": {
+          "component_groups": [
+            "dd:stay"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "dd:follow"
+          ]
+        },
+        "set_property": {
+          "dd:sitting": false,
+          "dd:ridden": true
+        }
+      },
+      "dd:dismounted": {
+        "set_property": {
+          "dd:ridden": false
+        }
+      },
+      "dd:on_tame": {
+        "remove": {
+          "component_groups": [
+            "dd:wild"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "dd:tamed",
+            "dd:follow"
+          ]
+        },
+        "set_property": {
+          "dd:sitting": false
+        }
+      },
+      "dd:sit": {
+        "remove": {
+          "component_groups": [
+            "dd:follow"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "dd:stay"
+          ]
+        },
+        "set_property": {
+          "dd:sitting": true
+        }
+      },
+      "dd:stand": {
+        "remove": {
+          "component_groups": [
+            "dd:stay"
+          ]
+        },
+        "add": {
+          "component_groups": [
+            "dd:follow"
+          ]
+        },
+        "set_property": {
+          "dd:sitting": false
+        }
+      }
+    }
+  }
+}

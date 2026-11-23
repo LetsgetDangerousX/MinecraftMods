@@ -1,0 +1,41 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:velociraptor",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/velociraptor"
+      },
+      "geometry": {
+        "default": "geometry.dd.velociraptor"
+      },
+      "animations": {
+        "walk": "animation.dd.velociraptor.walk",
+        "idle": "animation.dd.velociraptor.idle",
+        "look": "animation.dd.velociraptor.look",
+        "sit": "animation.dd.velociraptor.sit"
+      },
+      "scripts": {
+        "scale": "1.15",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#b38a55",
+        "overlay_color": "#2f7f7b"
+      }
+    }
+  }
+}

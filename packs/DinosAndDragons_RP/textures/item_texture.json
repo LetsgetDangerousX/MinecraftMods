@@ -1,0 +1,12 @@
+{
+  "resource_pack_name": "dinos_and_dragons",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "dd_dragon_horn": {
+      "textures": "textures/items/dd_dragon_horn"
+    },
+    "dd_castle_blueprint": {
+      "textures": "textures/items/dd_castle_blueprint"
+    }
+  }
+}

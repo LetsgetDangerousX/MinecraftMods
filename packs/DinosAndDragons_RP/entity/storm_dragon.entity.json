@@ -1,0 +1,45 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "dd:storm_dragon",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/dd/storm_dragon"
+      },
+      "geometry": {
+        "default": "geometry.dd.storm_dragon"
+      },
+      "animations": {
+        "walk": "animation.dd.storm_dragon.walk",
+        "idle": "animation.dd.storm_dragon.idle",
+        "look": "animation.dd.storm_dragon.look",
+        "sit": "animation.dd.storm_dragon.sit",
+        "fly": "animation.dd.storm_dragon.fly",
+        "fold": "animation.dd.storm_dragon.fold",
+        "wings": "controller.animation.dd.dragon.wings"
+      },
+      "scripts": {
+        "scale": "1.6",
+        "animate": [
+          "walk",
+          "idle",
+          "look",
+          {
+            "sit": "query.property('dd:sitting') ? 1.0 : 0.0"
+          },
+          "wings"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.dd.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#3b2f5c",
+        "overlay_color": "#f5e142"
+      }
+    }
+  }
+}

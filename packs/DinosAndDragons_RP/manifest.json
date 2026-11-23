@@ -1,0 +1,45 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Dinos & Dragons Resources",
+    "description": "pack.description",
+    "uuid": "17ce5ca5-1344-569f-b811-7e87e16485c7",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      90
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "00c9f898-ac33-5e5d-8576-74023021a8fa",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "4e7c8baa-9898-5d29-b13c-480f722f0559",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "metadata": {
+    "authors": [
+      "Dinos & Dragons"
+    ],
+    "product_type": "addon"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:item": {
+    "description": {
+      "identifier": "dd:dragon_horn",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "dd_dragon_horn"
+        }
+      },
+      "minecraft:display_name": {
+        "value": "Dragon Horn"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:use_modifiers": {
+        "use_duration": 0.25,
+        "movement_modifier": 1.0
+      },
+      "minecraft:interact_button": "Use Horn",
+      "minecraft:hand_equipped": true
+    }
+  }
+}
