@@ -1,10 +1,12 @@
 # Dinos & Dragons — Minecraft Bedrock add-on (Android, iOS, Windows, consoles)
 
-Four rideable, flying **dragons** and five rideable **dinosaurs**. They roam the
+Four rideable, flying **dragons** with bat-style wings and five brightly coloured, rideable **dinosaurs**. They roam the
 world, and you can tame them. You also get a **castle at the world spawn** that
 starts mostly empty so you can decorate it yourself.
 
 ![creatures](docs/previews/creatures.png)
+
+![dragon wings](docs/previews/dragon_wings.png)
 
 ## Install on Android
 
@@ -58,13 +60,19 @@ dragons fight back if you hit them. Wild T-rexes, raptors and dragons hunt anima
 
 ![castle](docs/previews/castle.png)
 
-* **Curtain walls** with a wall-walk, battlements and a safety rail.
-* **Four corner towers.** Each has stairs inside up to its roof deck and a flag.
-* **Gatehouse** on the south side with a 7-wide gate, big enough for a T-rex.
-* **Keep** with a great hall, two empty upper floors and stairs to the roof, which has a dragon landing pad.
-* **Dinosaur stable** with stalls and hay along the east wall.
-* **Well** and lantern-lit paths in the courtyard.
-* The walls are mostly bare on purpose so you can decorate. It is all lit, so monsters won't spawn inside.
+* **Moat and drawbridge** all the way around, with lantern posts at the bridge.
+* **Curtain walls** with a sloped base, buttresses, an overhanging crenellated parapet (corbels
+  underneath), a wall-walk with a safety rail, and moss and cracks low on the stone.
+* **Four round corner towers**, taller than the walls. Each has a spiral staircase, a room at
+  the top, a pointed slate roof and a flag. Doors lead to the courtyard and onto the wall-walk.
+* **Gatehouse** between two round guard towers. It has a 7-wide arched gate (room for a T-rex), a
+  raised portcullis, red banners, overhanging battlements and a guard room on the wall-walk.
+* **Keep** with four corner turrets with spires and stone bands around it. Inside: a great hall
+  with pillars, a fireplace, chandeliers and a dais for your throne, plus two empty upper floors.
+  On the roof there is a dragon landing pad and a hay nest.
+* **Lean-to dinosaur stable** along the east wall, tall enough for a brachiosaurus. Also a roofed
+  well, a flower garden, and mixed cobblestone paths.
+* The rooms are left bare on purpose so you can decorate. Everything is lit, so monsters won't spawn inside.
 
 The world spawn is set in the courtyard, just inside the gate.
 
@@ -72,7 +80,7 @@ The world spawn is set in the courtyard, just inside the gate.
 
 **Existing worlds:** the castle is only built on its own in a brand-new world. In an
 older world you get a **Castle Blueprint** instead. Stand where you want the castle,
-then **sneak and use** the blueprint. Careful: it clears a 57×57 area around you.
+then **sneak and use** the blueprint. Careful: it clears a 67×67 area around you.
 Craft more blueprints from 8 stone bricks around 1 paper.
 
 **Commands** (needs cheats):

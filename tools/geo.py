@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import math
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import numpy as np
 from PIL import Image
@@ -52,6 +52,11 @@ class Paint:
     belly_frac: float = 0.35        # how much of each side fades to the belly colour
     glow_tip: str | None = None     # colour the far (+Z or tip) end of the cube
     edge: str | None = None         # darker outline colour on the side faces
+    # Flat "membrane" cubes (height 0): mask(s, c) returns an RGB colour or None
+    # (transparent) for every texel of the top face.  s runs along +X (away from
+    # the body for a +X wing), c runs from the front (-Z) edge backwards.
+    mask: object = None
+    mirror_x: bool = False
 
 
 class Painter:
@@ -71,6 +76,19 @@ class Painter:
 
     def paint_cube(self, u, v, size, p: Paint):
         w, h, d = size
+        if p.mask is not None:
+            # Only the top face is painted; every other face stays transparent so the
+            # plane shows the same membrane from above and below (entity_alphatest is
+            # rendered double sided).  Box-UV top region: left column = -X side,
+            # bottom row = front (-Z) edge.
+            for py in range(d):
+                for px in range(w):
+                    s_ = (w - 1 - px) if p.mirror_x else px
+                    col = p.mask(s_, d - 1 - py)
+                    if col is not None:
+                        f = 1.0 + self.rng.uniform(-p.noise, p.noise)
+                        self.put(u + d + px, v + py, scale_rgb(col, f))
+            return
         base = hex_rgb(p.base)
         belly = hex_rgb(p.belly) if p.belly else base
         top = hex_rgb(p.top) if p.top else scale_rgb(base, 0.85)
@@ -124,6 +142,14 @@ class Painter:
                         for sx, sy, sr in spot_seeds:
                             if (tx - sx) ** 2 * fw * fw + (ty - sy) ** 2 * fh * fh < (sr * 1.2) ** 2:
                                 c = mix(c, pat, 0.7)
+                    elif p.pattern == "rings" and name in ("front", "back"):
+                        e = min(fx, fw - 1 - fx, fy, fh - 1 - fy)
+                        if e == 0:
+                            c = hex_rgb(p.edge or "#000000")
+                        elif e in (2, 3):
+                            c = pat
+                        elif e >= 5 and (fx * 7 + fy * 3) % 11 == 0:
+                            c = pat
                     elif p.pattern == "scales":
                         if (fx + fy) % 2 == 0:
                             c = scale_rgb(c, 0.92)
@@ -234,7 +260,7 @@ class Model:
 
     def cube(self, bone: str | Bone, origin, size, paint: Paint, pivot=None, rotation=None, inflate=0.0):
         b = self.get(bone) if isinstance(bone, str) else bone
-        size = tuple(int(round(s)) for s in size)
+        size = tuple(int(round(v)) for v in size)
         c = Cube(tuple(origin), size, paint,
                  tuple(pivot) if pivot else None,
                  tuple(rotation) if rotation else None, inflate)
@@ -259,7 +285,10 @@ class Model:
                 cp = (-c.pivot[0], c.pivot[1], c.pivot[2])
             if c.rotation:
                 cr = (c.rotation[0], -c.rotation[1], -c.rotation[2])
-            nb.cubes.append(Cube((-(ox + sx), oy, oz), c.size, c.paint, cp, cr, c.inflate))
+            paint = c.paint
+            if paint.mask is not None:
+                paint = replace(paint, mirror_x=not paint.mirror_x)
+            nb.cubes.append(Cube((-(ox + sx), oy, oz), c.size, paint, cp, cr, c.inflate))
         return nb
 
     # -- texture -----------------------------------------------------------

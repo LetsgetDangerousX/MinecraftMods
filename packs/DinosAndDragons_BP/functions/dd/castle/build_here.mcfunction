@@ -6,4 +6,6 @@ function dd/castle/part_3
 function dd/castle/part_4
 function dd/castle/part_5
 function dd/castle/part_6
-setworldspawn ~ ~1 ~8
+function dd/castle/part_7
+function dd/castle/part_8
+setworldspawn ~0 ~1 ~10

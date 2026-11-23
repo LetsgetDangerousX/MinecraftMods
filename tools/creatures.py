@@ -7,9 +7,10 @@ models bigger in game without making the texture higher resolution.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 
-from geo import Model, Paint
+from geo import Model, Paint, hex_rgb, mix
 
 
 @dataclass
@@ -62,9 +63,9 @@ def teeth_paint(p: Paint) -> Paint:
 
 def build_trex():
     m = Model("geometry.dd.trex", visible_bounds=(10, 7, (0, 3, 0)))
-    skin = Paint("#6e5b3a", belly="#cdb78c", pattern="stripes", pattern_color="#4a3b24", ridge="#4f3f27")
-    plain = Paint("#6e5b3a", belly="#cdb78c")
-    head = Paint("#6a5636", belly="#cdb78c", eyes="#f0a020", ridge="#4f3f27")
+    skin = Paint("#3e7b4f", belly="#f1e3ad", pattern="stripes", pattern_color="#e8792b", ridge="#244f34")
+    plain = Paint("#3e7b4f", belly="#f1e3ad")
+    head = Paint("#3a7449", belly="#f1e3ad", eyes="#ffcf26", ridge="#244f34")
     m.bone("root", pivot=(0, 0, 0))
     m.bone("body", "root", (0, 30, 2))
     m.cube("body", (-8, 22, -12), (16, 15, 24), skin)
@@ -75,9 +76,11 @@ def build_trex():
     m.bone("head", "neck", (0, 34, -22))
     m.cube("head", (-6.5, 32, -34), (13, 11, 12), head)
     m.cube("head", (-5, 32, -45), (10, 7, 11), teeth_paint(plain))
-    m.cube("head", (-5.5, 38, -40), (11, 2, 6), Paint("#5a4a2e"))
+    m.cube("head", (-4, 38.5, -41), (8, 1, 6), Paint("#244f34"))
+    m.cube("head", (3.5, 43, -32), (3, 2, 4), Paint("#c8392b"))
+    m.cube("head", (-6.5, 43, -32), (3, 2, 4), Paint("#c8392b"))
     m.bone("jaw", "head", (0, 32, -24))
-    m.cube("jaw", (-4.5, 28, -44), (9, 4, 19), Paint("#6e5b3a", belly="#d9c79f", teeth=True))
+    m.cube("jaw", (-4.5, 28, -44), (9, 4, 19), Paint("#3e7b4f", belly="#f6e9c0", teeth=True))
     m.bone("arm_l", "body", (6, 26, -13))
     m.cube("arm_l", (5, 20, -14), (2, 7, 3), plain)
     m.cube("arm_l", (5, 18, -17), (2, 2, 4), CLAW)
@@ -106,7 +109,7 @@ def build_trex():
         tame_chance=0.2,
         heal_items=[("beef", 10), ("porkchop", 10), ("mutton", 8), ("cooked_beef", 16), ("cooked_porkchop", 16)],
         seats=[(0, 2.75, 0.45)],
-        egg=("#6e5b3a", "#cdb78c"),
+        egg=("#3e7b4f", "#e8792b"),
         spawns=[("savanna", 6, 1, 1), ("jungle", 3, 1, 1), ("plains", 2, 1, 1)],
         sounds=dict(ambient="mob.ravager.ambient", hurt="mob.ravager.hurt", death="mob.ravager.death",
                     step="mob.ravager.step", pitch=(0.6, 0.75), volume=1.4),
@@ -127,9 +130,9 @@ def build_trex():
 
 def build_triceratops():
     m = Model("geometry.dd.triceratops", visible_bounds=(7, 4, (0, 1.5, 0)))
-    skin = Paint("#9a6037", belly="#dcc39a", pattern="scales", ridge="#7a4524")
-    head = Paint("#9a6037", belly="#dcc39a", eyes="#2b1d12", ridge="#7a4524")
-    frill = Paint("#c97a2e", pattern="spots", pattern_color="#5b2f14", edge="#4a2610")
+    skin = Paint("#d9792f", belly="#f6dfb2", pattern="spots", pattern_color="#8f3e14", ridge="#a34c1a")
+    head = Paint("#d9792f", belly="#f6dfb2", eyes="#1b130c", ridge="#a34c1a")
+    frill = Paint("#2f8fd0", pattern="rings", pattern_color="#ffd23f", edge="#c0362c")
     beak = Paint("#3d3026", noise=0.04)
     m.bone("root")
     m.bone("body", "root", (0, 18, 0))
@@ -137,15 +140,15 @@ def build_triceratops():
     m.cube("body", (-7, 23, -9), (14, 3, 18), skin)
     m.bone("head", "body", (0, 17, -12))
     m.cube("head", (-5, 10, -22), (10, 10, 11), head)
-    m.cube("head", (-3, 9, -27), (6, 7, 5), Paint("#9a6037", belly="#dcc39a"))
+    m.cube("head", (-3, 9, -27), (6, 7, 5), Paint("#d9792f", belly="#f6dfb2"))
     m.cube("head", (-2, 8.5, -29), (4, 5, 2), beak)
-    m.cube("head", (-8, 13, -13), (16, 12, 2), frill, pivot=(0, 14, -12), rotation=(-15, 0, 0))
+    m.cube("head", (-9, 14, -15), (18, 17, 2), frill, pivot=(0, 15, -14), rotation=(-10, 0, 0))
     m.cube("head", (2.5, 18, -32), (2, 2, 13), IVORY, pivot=(3.5, 19, -20), rotation=(-12, 0, 0))
     m.cube("head", (-4.5, 18, -32), (2, 2, 13), IVORY, pivot=(-3.5, 19, -20), rotation=(-12, 0, 0))
     m.cube("head", (-1, 15, -28), (2, 4, 2), IVORY)
     for i, (bone, px, pz, size) in enumerate([("leg_fl", 5.5, -8, (5, 12, 6)), ("leg_bl", 5.5, 7, (6, 13, 7))]):
         m.bone(bone, "root", (px, size[1], pz))
-        m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2), size, Paint("#8a5532", belly="#6b4026"))
+        m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2), size, Paint("#c06a2a", belly="#8a4a1e"))
         m.cube(bone, (px - size[0] / 2 - 0.5, 0, pz - size[2] / 2 - 1), (size[0] + 1, 2, 2), CLAW)
     m.mirror_bone("leg_fl", "leg_fr")
     m.mirror_bone("leg_bl", "leg_br")
@@ -163,7 +166,7 @@ def build_triceratops():
         tame_chance=0.3,
         heal_items=[("wheat", 6), ("apple", 8), ("carrot", 6), ("hay_block", 30)],
         seats=[(0, 1.9, 0.0)],
-        egg=("#9a6037", "#c97a2e"),
+        egg=("#d9792f", "#2f8fd0"),
         spawns=[("plains", 7, 2, 4), ("savanna", 5, 2, 3)],
         sounds=dict(ambient="mob.hoglin.ambient", hurt="mob.hoglin.hurt", death="mob.hoglin.death",
                     step="mob.hoglin.step", pitch=(0.55, 0.7), volume=1.1),
@@ -182,9 +185,9 @@ def build_triceratops():
 
 def build_raptor():
     m = Model("geometry.dd.velociraptor", visible_bounds=(5, 3, (0, 1, 0)))
-    skin = Paint("#b38a55", belly="#efe0bf", pattern="stripes", pattern_color="#5c3f20", ridge="#5c3f20")
-    plain = Paint("#b38a55", belly="#efe0bf")
-    feather = Paint("#2f7f7b", noise=0.1, pattern="bands", pattern_color="#1d4f4c")
+    skin = Paint("#4f86c6", belly="#eef2f6", pattern="stripes", pattern_color="#1f3f73", ridge="#1f3f73")
+    plain = Paint("#4f86c6", belly="#eef2f6")
+    feather = Paint("#f2822f", noise=0.1, pattern="bands", pattern_color="#c8402a")
     m.bone("root")
     m.bone("body", "root", (0, 16, 0))
     m.cube("body", (-3.5, 12, -7), (7, 7, 14), skin)
@@ -193,11 +196,11 @@ def build_raptor():
     m.cube("neck", (-2, 15, -11), (4, 8, 5), plain)
     m.cube("neck", (-0.5, 21, -8), (1, 3, 4), feather)
     m.bone("head", "neck", (0, 22, -9))
-    m.cube("head", (-2.5, 20, -16), (5, 5, 7), Paint("#b38a55", belly="#efe0bf", eyes="#e8c21c", ridge="#5c3f20"))
+    m.cube("head", (-2.5, 20, -16), (5, 5, 7), Paint("#4f86c6", belly="#eef2f6", eyes="#ffd21f", ridge="#1f3f73"))
     m.cube("head", (-1.5, 20.5, -21), (3, 3, 5), teeth_paint(plain))
     m.cube("head", (-0.5, 25, -15), (1, 2, 6), feather)
     m.bone("jaw", "head", (0, 20.5, -11))
-    m.cube("jaw", (-1.5, 19, -20.5), (3, 2, 6), Paint("#b38a55", belly="#efe0bf", teeth=True))
+    m.cube("jaw", (-1.5, 19, -20.5), (3, 2, 6), Paint("#4f86c6", belly="#eef2f6", teeth=True))
     m.bone("arm_l", "body", (3.5, 15, -5))
     m.cube("arm_l", (3, 11, -6), (2, 5, 2), plain)
     m.cube("arm_l", (3, 10, -8), (2, 1, 3), CLAW)
@@ -224,7 +227,7 @@ def build_raptor():
         tame_chance=0.33,
         heal_items=[("chicken", 6), ("rabbit", 6), ("cooked_chicken", 10), ("cooked_rabbit", 10)],
         seats=[(0, 1.25, 0.1)],
-        egg=("#b38a55", "#2f7f7b"),
+        egg=("#4f86c6", "#f2822f"),
         spawns=[("forest", 5, 2, 3), ("jungle", 5, 2, 4), ("desert", 4, 2, 3), ("mesa", 4, 2, 3)],
         sounds=dict(ambient="mob.fox.screech", hurt="mob.fox.hurt", death="mob.fox.death",
                     step="mob.wolf.step", pitch=(0.7, 0.9), volume=1.0),
@@ -245,9 +248,9 @@ def build_raptor():
 
 def build_brachio():
     m = Model("geometry.dd.brachiosaurus", visible_bounds=(12, 9, (0, 4, 0)))
-    skin = Paint("#7b8c6c", belly="#c4cdb0", pattern="spots", pattern_color="#5b6a4e", ridge="#5b6a4e")
-    plain = Paint("#7b8c6c", belly="#c4cdb0")
-    leg = Paint("#728263", belly="#5f6d52")
+    skin = Paint("#4fa3a6", belly="#f3ecd2", pattern="spots", pattern_color="#2f7276", ridge="#2f7276")
+    plain = Paint("#4fa3a6", belly="#f3ecd2")
+    leg = Paint("#46979a", belly="#2f7276")
     m.bone("root")
     m.bone("body", "root", (0, 28, 0))
     m.cube("body", (-9, 20, -14), (18, 18, 30), skin)
@@ -259,13 +262,13 @@ def build_brachio():
     m.bone("neck3", "neck2", (0, 59, -22))
     m.cube("neck3", (-3.5, 58, -27), (7, 13, 6), plain)
     m.bone("head", "neck3", (0, 70, -24))
-    m.cube("head", (-3.5, 67, -35), (7, 7, 10), Paint("#7b8c6c", belly="#c4cdb0", eyes="#2b2014", ridge="#5b6a4e"))
+    m.cube("head", (-3.5, 67, -35), (7, 7, 10), Paint("#4fa3a6", belly="#f3ecd2", eyes="#1b130c", ridge="#2f7276"))
     m.cube("head", (-2.5, 66.5, -40), (5, 5, 5), plain)
-    m.cube("head", (-2, 73, -33), (4, 3, 6), Paint("#6a7a5c"))
+    m.cube("head", (-2, 73, -33), (4, 3, 6), Paint("#f08a3c"))
     for bone, px, pz, size in [("leg_fl", 6, -8, (6, 26, 6)), ("leg_bl", 6, 10, (7, 23, 7))]:
         m.bone(bone, "root", (px, size[1], pz))
         m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2), size, leg)
-        m.cube(bone, (px - size[0] / 2 - 0.5, 0, pz - size[2] / 2 - 0.5), (size[0] + 1, 3, size[2] + 1), Paint("#5f6d52"))
+        m.cube(bone, (px - size[0] / 2 - 0.5, 0, pz - size[2] / 2 - 0.5), (size[0] + 1, 3, size[2] + 1), Paint("#2f6a6d"))
     m.mirror_bone("leg_fl", "leg_fr")
     m.mirror_bone("leg_bl", "leg_br")
     m.bone("tail1", "body", (0, 31, 16))
@@ -285,7 +288,7 @@ def build_brachio():
         tame_chance=0.25,
         heal_items=[("apple", 10), ("melon_slice", 6), ("sweet_berries", 4), ("golden_apple", 40)],
         seats=[(0, 3.75, 0.7), (0, 3.75, -0.4), (0, 3.65, -1.5)],
-        egg=("#7b8c6c", "#c4cdb0"),
+        egg=("#4fa3a6", "#f08a3c"),
         spawns=[("plains", 3, 1, 2), ("savanna", 3, 1, 2), ("jungle", 2, 1, 1)],
         sounds=dict(ambient="mob.sniffer.idle", hurt="mob.sniffer.hurt", death="mob.sniffer.death",
                     step="mob.irongolem.walk", pitch=(0.4, 0.55), volume=1.6),
@@ -304,9 +307,9 @@ def build_brachio():
 
 def build_stego():
     m = Model("geometry.dd.stegosaurus", visible_bounds=(7, 4, (0, 1.5, 0)))
-    skin = Paint("#5f7650", belly="#c9cfa4", pattern="spots", pattern_color="#465a3a")
-    plain = Paint("#5f7650", belly="#c9cfa4")
-    plate = Paint("#c4553a", pattern="plates", pattern_color="#e58a55", edge="#6b2a1b", noise=0.05)
+    skin = Paint("#8bad3c", belly="#f3eab8", pattern="spots", pattern_color="#4e6e1f")
+    plain = Paint("#8bad3c", belly="#f3eab8")
+    plate = Paint("#e5452f", pattern="plates", pattern_color="#ff8a3d", edge="#7a1f14", glow_tip="#ffd23f", noise=0.05)
     m.bone("root")
     m.bone("body", "root", (0, 18, 0))
     m.cube("body", (-7, 10, -12), (14, 14, 26), skin)
@@ -317,11 +320,11 @@ def build_stego():
     m.bone("neck", "body", (0, 16, -12))
     m.cube("neck", (-3, 10, -19), (6, 7, 8), plain)
     m.bone("head", "neck", (0, 13, -18))
-    m.cube("head", (-2.5, 8, -26), (5, 6, 8), Paint("#5f7650", belly="#c9cfa4", eyes="#2a1d12"))
-    m.cube("head", (-1.5, 8, -29), (3, 4, 3), Paint("#4b5e3f"))
+    m.cube("head", (-2.5, 8, -26), (5, 6, 8), Paint("#8bad3c", belly="#f3eab8", eyes="#1b130c"))
+    m.cube("head", (-1.5, 8, -29), (3, 4, 3), Paint("#6f8f2e"))
     for bone, px, pz, size in [("leg_fl", 4.5, -8, (4, 11, 5)), ("leg_bl", 5, 8, (5, 15, 7))]:
         m.bone(bone, "root", (px, size[1], pz))
-        m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2), size, Paint("#56694a", belly="#3f4d36"))
+        m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2), size, Paint("#7d9c34", belly="#566f22"))
         m.cube(bone, (px - size[0] / 2, 0, pz - size[2] / 2 - 1), (size[0], 2, 1), CLAW)
     m.mirror_bone("leg_fl", "leg_fr")
     m.mirror_bone("leg_bl", "leg_br")
@@ -344,7 +347,7 @@ def build_stego():
         tame_chance=0.3,
         heal_items=[("wheat", 6), ("carrot", 6), ("potato", 6), ("beetroot", 6), ("apple", 8)],
         seats=[(0, 2.15, 0.35)],
-        egg=("#5f7650", "#c4553a"),
+        egg=("#8bad3c", "#e5452f"),
         spawns=[("forest", 5, 1, 3), ("taiga", 4, 1, 3), ("plains", 2, 1, 2)],
         sounds=dict(ambient="mob.polarbear.idle", hurt="mob.polarbear.hurt", death="mob.polarbear.death",
                     step="mob.polarbear.step", pitch=(0.55, 0.7), volume=1.0),
@@ -357,6 +360,69 @@ def build_stego():
     )
 
 
+
+# --------------------------------------------------------------------------
+# Wing membranes
+# --------------------------------------------------------------------------
+# Outer wing: finger tips (span, chord) measured from the wrist, first one is
+# the leading edge digit.  The membrane between neighbouring fingers is cut
+# into a scallop so the trailing edge looks like a real bat/dragon wing.
+OUTER_TIPS = [(22.0, 0.6), (20.0, 10.5), (12.5, 18.5), (3.0, 19.2)]
+
+
+def _seg_dist(px, py, ax, ay, bx, by):
+    dx, dy = bx - ax, by - ay
+    t = max(0.0, min(1.0, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)))
+    return math.hypot(px - ax - t * dx, py - ay - t * dy)
+
+
+def wing_masks(base: str, vein: str, edge: str):
+    B, V, E = hex_rgb(base), hex_rgb(vein), hex_rgb(edge)
+    light = mix(B, (255, 255, 255), 0.28)
+
+    def inner(s, c):
+        W = 16.0
+        S, C = s + 0.5, c + 0.5
+        t = S / W
+        trail = 23.5 - 4.0 * t - 4.5 * math.sin(math.pi * t)
+        if C > trail:
+            return None
+        if trail - C < 1.0:
+            return E
+        for tt in (0.3, 0.68):
+            if _seg_dist(S, C, W, 0.0, tt * W, 23.5 - 4.0 * tt - 4.5 * math.sin(math.pi * tt)) < 0.55:
+                return mix(V, B, 0.25)
+        if C < 1.6:
+            return mix(B, V, 0.35)
+        return mix(B, light, min(1.0, C / trail) * 0.8)
+
+    tips = OUTER_TIPS
+    angs = [math.atan2(c, s) for s, c in tips]
+    lens = [math.hypot(s, c) for s, c in tips]
+
+    def outer(s, c):
+        S, C = s + 0.5, c + 0.5
+        th, rho = math.atan2(C, S), math.hypot(S, C)
+        if th <= angs[0]:
+            r = lens[0] if C <= 1.6 else -1
+        elif th >= angs[-1]:
+            r = lens[-1]
+        else:
+            i = max(k for k in range(len(angs) - 1) if angs[k] <= th)
+            t = (th - angs[i]) / (angs[i + 1] - angs[i])
+            chord = math.dist(tips[i], tips[i + 1])
+            r = lens[i] + (lens[i + 1] - lens[i]) * t - 0.3 * chord * math.sin(math.pi * t)
+        if rho > r:
+            return None
+        for (ts, tc) in tips:
+            if _seg_dist(S, C, 0.0, 0.0, ts, tc) < 0.6:
+                return V
+        if r - rho < 1.0:
+            return E
+        return mix(B, light, min(1.0, rho / max(r, 1.0)) * 0.8)
+
+    return inner, outer
+
 # --------------------------------------------------------------------------
 # Dragons (one parametrised builder, four looks)
 # --------------------------------------------------------------------------
@@ -364,22 +430,22 @@ def build_stego():
 DRAGON_LOOKS = {
     "fire": dict(
         skin=Paint("#a8281e", belly="#f0a43a", pattern="scales", ridge="#6e140e"),
-        membrane=Paint("#d9622b", belly="#d9622b", pattern="veins", pattern_color="#7a1d12", noise=0.05),
+        membrane=Paint("#e2632a", pattern_color="#6e1a10", edge="#8a2313"),
         horn=Paint("#efe3c2", noise=0.04), spike=Paint("#3b1010", noise=0.05),
         eyes="#ffd21f", horns="swept", tail="spade", spikes=6),
     "ice": dict(
         skin=Paint("#d4ecf7", belly="#ffffff", pattern="scales", ridge="#7fd1f0"),
-        membrane=Paint("#9fd8ef", belly="#9fd8ef", pattern="veins", pattern_color="#5aa8cc", noise=0.04),
+        membrane=Paint("#a6dcf2", pattern_color="#4f9cc4", edge="#6fb4d8"),
         horn=Paint("#bff3ff", noise=0.03), spike=Paint("#6cc7e8", noise=0.04),
         eyes="#1f4fd1", horns="crown", tail="crystal", spikes=7),
     "forest": dict(
         skin=Paint("#3e7d32", belly="#b8d36b", pattern="spots", pattern_color="#2b5a22", ridge="#2b5a22"),
-        membrane=Paint("#62a947", belly="#62a947", pattern="veins", pattern_color="#2f6a24", noise=0.06),
+        membrane=Paint("#6fb84a", pattern_color="#2f6a24", edge="#3f7f2c"),
         horn=Paint("#6b4a2a", noise=0.06), spike=Paint("#7cc44f", noise=0.08),
         eyes="#f2b01e", horns="branch", tail="leaf", spikes=5),
     "storm": dict(
         skin=Paint("#3b2f5c", belly="#8e85b5", pattern="stripes", pattern_color="#f5e142", ridge="#f5e142"),
-        membrane=Paint("#5b3f8c", belly="#5b3f8c", pattern="veins", pattern_color="#f5e142", noise=0.05),
+        membrane=Paint("#6a48a6", pattern_color="#f5e142", edge="#2e2050"),
         horn=Paint("#f1cf45", noise=0.04), spike=Paint("#f5e142", noise=0.04),
         eyes="#fff35c", horns="long", tail="blade", spikes=6),
 }
@@ -461,15 +527,26 @@ def build_dragon(look: str):
         m.cube("tail4", (-3, 17.5, 44), (6, 1, 6), mem)
     elif tail == "blade":
         m.cube("tail4", (-0.5, 16, 44), (1, 5, 7), horn)
-    # wings: arm + membrane, two segments each side
+    # wings: shoulder joint, arm and three fingers holding two shaped membranes
+    vein = mem.pattern_color or "#000000"
+    edge = mem.edge or vein
+    inner_mask, outer_mask = wing_masks(mem.base, vein, edge)
+    spar = Paint(vein, noise=0.05)
     m.bone("wing_l", "body", (5.5, 23, -6))
+    m.cube("wing_l", (4, 21.5, -8), (4, 3, 4), skin)
     m.cube("wing_l", (5.5, 22, -7), (16, 2, 2), plain)
-    m.cube("wing_l", (5.5, 22.5, -5), (16, 1, 15), mem)
+    m.cube("wing_l", (5.5, 23, -6), (16, 0, 24), Paint(mem.base, mask=inner_mask, noise=0.04))
     m.bone("wing_tip_l", "wing_l", (21.5, 23, -6))
-    m.cube("wing_tip_l", (21.5, 22, -7), (16, 2, 2), plain)
-    m.cube("wing_tip_l", (21.5, 22.5, -5), (14, 1, 11), mem)
-    m.cube("wing_tip_l", (35.5, 22.5, -5), (2, 1, 5), mem)
-    m.cube("wing_tip_l", (37.5, 22, -8), (2, 2, 2), horn)
+    m.cube("wing_tip_l", (21, 22, -9.5), (1, 2, 3), horn)
+    m.cube("wing_tip_l", (21.5, 22, -7), (11, 2, 2), plain)
+    m.cube("wing_tip_l", (32.5, 22.5, -6.5), (11, 1, 1), plain)
+    m.cube("wing_tip_l", (43.5, 22.5, -7), (2, 1, 1), horn)
+    for (ts, tc) in OUTER_TIPS[1:]:
+        length = round(math.hypot(ts, tc))
+        ang = math.degrees(math.atan2(tc, ts))
+        m.cube("wing_tip_l", (21.5, 22.5, -6.5), (length, 1, 1), spar,
+               pivot=(21.5, 23, -6), rotation=(0, -ang, 0))
+    m.cube("wing_tip_l", (21.5, 23, -6), (22, 0, 20), Paint(mem.base, mask=outer_mask, noise=0.04))
     m.mirror_bone("wing_l", "wing_r")
     m.mirror_bone("wing_tip_l", "wing_tip_r", new_parent="wing_r")
     m.paint(seed={"fire": 61, "ice": 62, "forest": 63, "storm": 64}[look])

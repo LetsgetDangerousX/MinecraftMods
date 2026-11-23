@@ -208,29 +208,29 @@
         "wing_l": {
           "rotation": [
             0,
-            0,
-            "math.sin(query.life_time * 300) * 38"
+            "math.sin(query.life_time * 264 + 90) * 6",
+            "-math.sin(query.life_time * 264) * 38 - 6"
           ]
         },
         "wing_r": {
           "rotation": [
             0,
-            0,
-            "-math.sin(query.life_time * 300) * 38"
+            "-math.sin(query.life_time * 264 + 90) * 6",
+            "math.sin(query.life_time * 264) * 38 + 6"
           ]
         },
         "wing_tip_l": {
           "rotation": [
             0,
-            0,
-            "math.sin(query.life_time * 300 - 50) * 28"
+            "math.max(0, math.sin(query.life_time * 264)) * -12",
+            "-math.sin(query.life_time * 264 - 50) * 28"
           ]
         },
         "wing_tip_r": {
           "rotation": [
             0,
-            0,
-            "-math.sin(query.life_time * 300 - 50) * 28"
+            "math.max(0, math.sin(query.life_time * 264)) * 12",
+            "math.sin(query.life_time * 264 - 50) * 28"
           ]
         },
         "leg_fl": {
@@ -264,13 +264,13 @@
         "body": {
           "position": [
             0,
-            "math.sin(query.life_time * 300 + 90) * 0.8",
+            "math.sin(query.life_time * 264 + 90) * 0.8",
             0
           ]
         },
         "tail1": {
           "rotation": [
-            "math.sin(query.life_time * 300 - 60) * 3",
+            "math.sin(query.life_time * 264 - 60) * 3",
             0,
             0
           ]
@@ -284,28 +284,28 @@
           "rotation": [
             0,
             "-70 + math.sin(query.life_time * 50) * 2",
-            -25
+            -35
           ]
         },
         "wing_r": {
           "rotation": [
             0,
             "70 - math.sin(query.life_time * 50) * 2",
-            25
+            35
           ]
         },
         "wing_tip_l": {
           "rotation": [
             0,
-            -100,
-            40
+            -160,
+            15
           ]
         },
         "wing_tip_r": {
           "rotation": [
             0,
-            100,
-            -40
+            160,
+            -15
           ]
         }
       }

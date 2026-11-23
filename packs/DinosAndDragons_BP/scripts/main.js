@@ -11,12 +11,12 @@
 // Chat commands (cheats on):  /scriptevent dd:castle   /scriptevent dd:help
 //                             /scriptevent dd:spawn_all  /scriptevent dd:setspawn
 import { world, system, ItemStack, EntityDamageCause, GameMode } from "@minecraft/server";
-import { SPECIES, CASTLE_PARTS } from "./species.js";
+import { SPECIES, CASTLE_PARTS, CASTLE_EXTENT, CASTLE_SPAWN } from "./species.js";
 
 const CASTLE_KEY = "dd:castle";
 const KIT_TAG = "dd_kit";
 const NEW_WORLD_TICKS = 20 * 60 * 5; // worlds younger than 5 minutes get the castle automatically
-const SPAWN_OFFSET = { x: 0, y: 1, z: 8 }; // courtyard, just inside the gate
+const SPAWN_OFFSET = CASTLE_SPAWN; // courtyard, just inside the gate
 
 /** @type {Map<string, number>} */
 const hornCooldown = new Map();
@@ -121,14 +121,16 @@ function castleBaseY(/** @type {import("@minecraft/server").Dimension} */ dim, /
  */
 function buildCastle(dim, cx, cz, startY, done) {
   building = true;
-  const area = `${cx - 30} ${startY - 20} ${cz - 30} ${cx + 30} ${startY + 20} ${cz + 30}`;
+  const r = CASTLE_EXTENT + 2;
+  const area = `${cx - r} ${startY - 20} ${cz - r} ${cx + r} ${startY + 20} ${cz + r}`;
   run(dim, `tickingarea remove dd_castle`);
   run(dim, `tickingarea add ${area} dd_castle`);
   let waited = 0;
   const wait = system.runInterval(() => {
     waited++;
     let loaded = true;
-    for (const [dx, dz] of [[-29, -29], [29, -29], [-29, 29], [29, 29], [0, 0]]) {
+    const e = CASTLE_EXTENT;
+    for (const [dx, dz] of [[-e, -e], [e, -e], [-e, e], [e, e], [0, 0]]) {
       try {
         if (!dim.getBlock({ x: cx + dx, y: startY, z: cz + dz })) loaded = false;
       } catch {
@@ -232,7 +234,7 @@ world.afterEvents.playerSpawn.subscribe((ev) => {
       world.setDynamicProperty(CASTLE_KEY, "skipped");
       player.getComponent("minecraft:inventory")?.container?.addItem(new ItemStack("dd:castle_blueprint", 1));
       tell(player, "§6[Dinos & Dragons]§r This world already existed, so no castle was built automatically.");
-      tell(player, "§7Stand where you want it, then §fsneak + use the Castle Blueprint§7 (it clears a 57x57 area!).");
+      tell(player, `§7Stand where you want it, then §fsneak + use the Castle Blueprint§7 (it clears a ${CASTLE_EXTENT * 2 + 1}x${CASTLE_EXTENT * 2 + 1} area!).`);
     }
   }, 40);
 });
@@ -361,7 +363,7 @@ function onUse(player, item) {
     if (now - last < 40 || building) return;
     hornCooldown.set(player.id, now);
     if (!player.isSneaking) {
-      tell(player, "§eSneak and use the blueprint to build a castle centred where you stand. It clears a 57x57 area!");
+      tell(player, `§eSneak and use the blueprint to build a castle centred where you stand. It clears a ${CASTLE_EXTENT * 2 + 1}x${CASTLE_EXTENT * 2 + 1} area!`);
       return;
     }
     if (player.dimension.id !== "minecraft:overworld") {
